@@ -1,0 +1,15 @@
+.footer {
+  color: #545454;
+  font-size: 18px;
+  font-family: "Inter";
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+@media screen and (max-width: 320px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

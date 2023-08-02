@@ -1,0 +1,111 @@
+.profile {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.profile__image {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  background-position: center;
+}
+
+.profile__info {
+  display: grid;
+  grid-template-areas: "title button" "description description";
+  grid-template-columns: minmax(auto, 373px) auto;
+  grid-gap: 7px 18px;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.profile__title {
+  font-size: 42px;
+  font-family: "Inter";
+  line-height: 48px;
+  font-weight: 500;
+  font-size: 42px;
+  grid-area: title;
+  margin: 0;
+}
+
+.profile__edit-button {
+  height: 24px;
+  width: 24px;
+  background: transparent url(../images/Edit\ Button.svg) center no-repeat;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  grid-area: button;
+  transition: 0.3s linear;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
+}
+
+.profile__description {
+  font-size: 18px;
+  grid-area: description;
+  line-height: 22px;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 373px;
+}
+
+.profile__add-button {
+  height: 50px;
+  width: 150px;
+  background: transparent url(../images/Add\ Button.svg) center no-repeat;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  margin-left: auto;
+  transition: 0.3s linear;
+  cursor: pointer;
+}
+
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 320px) {
+  .profile {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile__info {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .profile__title {
+    display: flex;
+    padding-left: 40px;
+    font-size: 22px;
+  }
+
+  .profile__description {
+    display: flex;
+    color: #fff;
+    text-align: center;
+    font-family: "Inter";
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .profile__add-button {
+    width: 282px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+}
