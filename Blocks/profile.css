@@ -27,7 +27,6 @@
   font-family: "Inter";
   line-height: 48px;
   font-weight: 500;
-  font-size: 42px;
   grid-area: title;
   margin: 0;
 }
@@ -61,7 +60,7 @@
 .profile__add-button {
   height: 50px;
   width: 150px;
-  background: transparent url(../images/Add\ Button.svg) center no-repeat;
+  background: transparent url(../images/plus\ sign.svg) center no-repeat;
   box-sizing: border-box;
   border: 2px solid #fff;
   margin-left: auto;
@@ -107,5 +106,8 @@
     width: 282px;
     height: 50px;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
