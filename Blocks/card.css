@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  height: 361px;
-  width: 282px;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -11,6 +9,8 @@
 .card__image {
   object-fit: cover;
   min-height: 282px;
+  height: 282px;
+  width: 282px;
 }
 
 .card__description {
