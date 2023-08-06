@@ -94,8 +94,14 @@
 
   .profile__title {
     padding-left: 24px;
+    padding-top: 20.75px;
     font-size: 22px;
-    font-weight: 500;
+    max-width: 373px;
+  }
+
+  .profile__edit-button {
+    height: 18px;
+    width: 18px;
   }
 
   .profile__description {
@@ -111,6 +117,7 @@
 
   .profile__add-button {
     width: 282px;
+    height: 50px;
     flex-shrink: 0;
     display: flex;
     justify-content: center;

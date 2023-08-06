@@ -13,5 +13,3 @@
 **Github**
 
 https://travis-sutton.github.io/se_project_aroundtheus/
-
-I do not understand why my github pages are not linking my stylesheet correctly. Please advise if I'm overlooking something.
