@@ -1,6 +1,6 @@
 .cards {
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 47.25px;
 }
 
 .cards__list {
@@ -10,4 +10,10 @@
   grid-gap: 20px 17px;
   padding: 0;
   margin: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .cards {
+    margin-top: 36px;
+  }
 }
