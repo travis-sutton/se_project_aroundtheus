@@ -1,6 +1,5 @@
 .modal {
-  /* display: none; -remove comments when done styling*/
-  display: flex; /*delete when done styling*/
+  display: none;
   align-items: center;
   justify-content: center;
   position: fixed;
@@ -41,12 +40,17 @@
   cursor: pointer;
 }
 
+.modal__close:hover {
+  opacity: 0.6;
+}
+
 .modal__heading {
   font-family: "Inter", Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: 900;
   line-height: normal;
   margin: 0 0 38px 0;
+  max-width: 430px;
 }
 
 .modal__form {
@@ -56,15 +60,17 @@
 
 .modal__input {
   font-family: "Inter", Arial, Helvetica, sans-serif;
-  padding: 0;
-  height: 27px;
-  width: 100%;
-  margin: 0;
-  margin-bottom: 30px;
-  border: none;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   line-height: normal;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  margin: 0;
+  margin-bottom: 30px;
+  height: 27px;
+  width: 100%;
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 .modal__input:last-of-type {
@@ -81,6 +87,12 @@
   height: 50.152px;
   width: 100%;
   margin-top: 48px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.modal__button:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 620px) {
@@ -89,8 +101,9 @@
   }
 
   .modal__container {
-    max-width: 282px;
+    width: 282px;
     padding: 25px 22px;
+    box-sizing: border-box;
   }
 
   .modal__input {
@@ -101,7 +114,7 @@
     height: 26px;
     width: 26px;
     top: -43px;
-    left: 280px;
+    left: 240px;
   }
 
   .modal__heading {
