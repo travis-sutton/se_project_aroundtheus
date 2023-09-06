@@ -6,9 +6,11 @@
 
 # Technologies and Techniques: @Media, @Font-Face, Grid technique, Adaptive Display, Form Submission, Profile Name, Description customization, Javascript
 
+# User is able to: Customzie their profile name and description, and add / remove photos!
+
 **Figma**
 
-- [Figma Design Link](https://www.figma.com/file/EO5AaNCuzzFL7X5gSY7HwQ/Sprint-4_-Around-The-U.S.-_-desktop-%2B-mobile?node-id=0%3A1&mode=dev)
+- [Figma Design Link](https://www.figma.com/file/m79HxYeZpOXRw0Tz2eZGOV/Sprint-5%3A-Around-The-U.S.-%7C-desktop-%2B-mobile?node-id=0%3A1&mode=dev)
 
 **Github**
 
