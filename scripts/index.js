@@ -36,13 +36,12 @@ const profileModalCloseButton = profileEditModal.querySelector(
   "#profile-close-modal"
 );
 const profileSaveButton = document.querySelector("#profile-modal-save-button");
-
 const addCardButton = document.querySelector("#add-card-button");
 const addButtonCloseModal = document.querySelector("#add-button-close-modal");
-
 const previewImageCloseModal = document.querySelector(
   "#preview-image-close-modal"
 );
+const likeButtons = document.querySelectorAll(".card__like-button");
 
 // Profile
 const profileTitle = document.querySelector("#prof-title");
@@ -90,7 +89,6 @@ function getCardElement(cardData) {
   });
 
   cardImageEl.addEventListener("click", () => {
-    console.log("test");
     openModal(previewImageModal);
     const previewImage = previewImageModal.querySelector("#preview-image");
     previewImage.src = cardData.link;
@@ -157,6 +155,18 @@ profileModalCloseButton.addEventListener("click", () =>
   closeModal(profileEditModal)
 );
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeModal(profileEditModal);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target === profileEditModal) {
+    closeModal(profileEditModal);
+  }
+});
+
 // Profile Edit Modal Save
 profileEditForm.addEventListener("submit", profileSaveSubmit);
 
@@ -167,6 +177,18 @@ addCardButton.addEventListener("click", () => openModal(addCardModal));
 // Add New Card Modal Close
 addButtonCloseModal.addEventListener("click", () => closeModal(addCardModal));
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeModal(addCardModal);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target === addCardModal) {
+    closeModal(addCardModal);
+  }
+});
+
 // Add New Card Modal Save
 addButtonForm.addEventListener("submit", addCardSaveSubmit);
 
@@ -174,6 +196,3 @@ addButtonForm.addEventListener("submit", addCardSaveSubmit);
 
 // Generate Initial 6 cards
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
-
-// Like Buttons
-const likeButtons = document.querySelectorAll(".card__like-button");

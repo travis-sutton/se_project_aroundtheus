@@ -17,6 +17,8 @@
         />
       </header>
 
+      <!-- Main Page -->
+
       <main class="content">
         <section class="profile page__section">
           <img
@@ -67,18 +69,24 @@
             id="profile-title-input"
             class="modal__input"
             placeholder="Name"
+            minlength="2"
+            maxlength="40"
             required
           />
+          <span id="profile-title-input-error"></span>
           <input
             name="description"
             type="text"
             id="profile-description-input"
             class="modal__input"
             placeholder="Description"
+            minlength="2"
+            maxlength="200"
             required
           />
+          <span id="profile-description-input-error"></span>
           <button
-            class="modal__save-button"
+            class="modal__button modal__save-button"
             id="profile-modal-save-button"
             type="submit"
           >
@@ -105,26 +113,34 @@
             id="add-card-title-input"
             class="modal__input modal__input_type_title"
             placeholder="Title"
+            minlength="1"
+            maxlength="30"
             required
           />
+          <span id="add-card-title-input-error"></span>
           <input
             name="url"
-            type="text"
+            type="url"
             id="add-card-image-input"
             class="modal__input modal__input_type_url"
             placeholder="Image URL"
             required
           />
+          <span id="add-card-image-input-error"></span>
+
           <button
-            class="modal__save-button"
+            class="modal__button modal__save-button modal__save-button_disabled"
             id="add-card-save-button"
             type="submit"
+            disabled
           >
             Save
           </button>
         </form>
       </div>
     </div>
+
+    <!-- Preview Image Modal -->
 
     <div class="modal" id="preview-image-modal">
       <div class="modal__container modal__container-preview-image">
@@ -143,6 +159,8 @@
       </div>
     </div>
 
+    <!-- Template for Future Cards -->
+
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" id="card-image" />
@@ -154,6 +172,9 @@
       </li>
     </template>
 
-    <script src="./scripts/index.js" defer></script>
+    <!-- Scripts Links -->
+
+    <script defer src="./scripts/index.js" defer></script>
+    <script defer src="./scripts/validate.js"></script>
   </body>
 </html>
