@@ -96,9 +96,22 @@ function getCardElement(cardData) {
     previewImageText.textContent = cardData.name;
   });
 
+  // Image modal close
   previewImageCloseModal.addEventListener("click", () =>
     closeModal(previewImageModal)
   );
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeModal(previewImageModal);
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target === previewImageModal) {
+      closeModal(previewImageModal);
+    }
+  });
 
   cardTitleEl.textContent = cardData.name;
   cardImageEl.src = cardData.link;
