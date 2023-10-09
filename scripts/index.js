@@ -115,7 +115,7 @@ function openModal(modal) {
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
   document.removeEventListener("keydown", closeModalOnEsc);
-  document.addEventListener("click", closeModalOnClickOutside);
+  document.removeEventListener("click", closeModalOnClickOutside);
 }
 
 // Esc Key
