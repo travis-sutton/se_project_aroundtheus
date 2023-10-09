@@ -129,15 +129,7 @@ function closeModalOnEsc(event) {
 // Click outside modal close
 function closeModalOnClickOutside(event) {
   if (event.target.classList.contains("modal")) {
-    if (event.target === profileEditModal) {
-      closeModal(profileEditModal);
-    }
-    if (event.target === addCardModal) {
-      closeModal(addCardModal);
-    }
-    if (event.target === previewImageModal) {
-      closeModal(previewImageModal);
-    }
+    closeModal(event.target);
   }
 }
 
@@ -196,11 +188,8 @@ addButtonForm.addEventListener("submit", handleCardSaveSubmit);
 
 // Preview Image
 // Preview Image Close
-previewImageCloseModal.addEventListener("click", (e) => {
+previewImageCloseModal.addEventListener("click", () => {
   closeModal(previewImageModal);
-  if (e.target != previewImageModal) {
-    closeModal(previewImageCloseModal);
-  }
 });
 
 // Setup //
