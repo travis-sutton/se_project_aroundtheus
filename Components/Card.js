@@ -11,11 +11,12 @@ export default class Card {
       .content.querySelector(".card")
       .cloneNode(true);
 
+    this._cardImageElement = cardElement.querySelector(".card__image");
+
     return cardElement;
   }
 
   _setEventListeners() {
-    this._cardImageElement = this._element.querySelector(".card__image");
     this._likeButton = this._element.querySelector(".card__like-button");
     this._deleteButton = this._element.querySelector(".card__delete-button");
 
@@ -45,8 +46,9 @@ export default class Card {
     this._setEventListeners();
 
     this._element.querySelector(".card__title").textContent = this._data.name;
-    this._element.querySelector(".card__image").src = this._data.link;
-    this._element.querySelector(".card__image").alt = this._data.name;
+
+    this._cardImageElement.src = this._data.link;
+    this._cardImageElement.alt = this._data.name;
 
     return this._element;
   }

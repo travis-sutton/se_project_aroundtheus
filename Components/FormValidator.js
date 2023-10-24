@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(settings, formElement) {
     this._settings = settings;
     this._formElement = formElement;
@@ -74,19 +74,3 @@ class FormValidator {
     this._toggleButtonState();
   }
 }
-
-const formSettings = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
-
-const formElements = document.querySelectorAll(".modal__form");
-
-formElements.forEach((formElement) => {
-  const formValidator = new FormValidator(formSettings, formElement);
-  formValidator.enableValidation();
-});
