@@ -140,7 +140,7 @@ function handleCardSaveSubmit(event) {
 
   closeModal(addCardModal);
   event.target.reset();
-  submitButton.classList.add("modal__save-button_disabled");
+  addCardFormValidator.resetValidation();
 }
 
 // Event Listeners //
