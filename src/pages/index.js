@@ -67,6 +67,9 @@ const addCardModal = document.querySelector("#add-card-modal");
 const profileEditForm = profileEditModal.querySelector(".modal__form");
 const addButtonForm = addCardModal.querySelector(".modal__form");
 
+// User Info Instantiation
+const userInfo = new UserInfo(profileTitle, profileDescription);
+
 // ************************** Profile Edit ************************** //
 
 // Profile Edit Popup
@@ -79,22 +82,20 @@ profileEditPopup.setEventListeners();
 
 // Profile Edit Popup Button
 profileEditButton.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
+  const userInfoData = userInfo.getUserInfo();
+
+  profileTitleInput.value = userInfoData.name;
+  profileDescriptionInput.value = userInfoData.job;
+
   profileEditPopup.open();
 });
 
 // Profile Changes Save
-function handleProfileSaveSubmit() {
-  const inputValues = profileEditPopup._getInputValues();
-
-  profileTitle.textContent = inputValues.title;
-  profileDescription.textContent = inputValues.description;
-
-  // User info as an object
-  const userInfo = new UserInfo(profileTitle, profileDescription);
-  const currentUserInfo = userInfo.getUserInfo();
-  console.log(currentUserInfo);
+function handleProfileSaveSubmit(inputValues) {
+  userInfo.setUserInfo({
+    name: inputValues.title,
+    job: inputValues.description,
+  });
 }
 
 // ************************ New Card Creation ************************ //
@@ -108,11 +109,14 @@ const addCardPopup = new PopupWithForm(
 addCardPopup.setEventListeners();
 
 // Add Card Button
-addCardButton.addEventListener("click", () => addCardPopup.open());
+addCardButton.addEventListener("click", () => {
+  // Reset the Input fields on the add card popup
+  addCardFormValidator.resetValidation();
 
-function handleCardSaveSubmit() {
-  const inputValues = addCardPopup._getInputValues();
+  addCardPopup.open();
+});
 
+function handleCardSaveSubmit(inputValues) {
   // Create a new card instance
   const newCardInstance = new Card(
     {
@@ -128,9 +132,6 @@ function handleCardSaveSubmit() {
 
   // Add the new card to the Section
   cardSection.addItem(newCardElement);
-
-  // Reset the Input fields on the add card popup
-  addCardFormValidator.resetValidation();
 }
 
 // ************************** Preview Image ************************** //
@@ -148,25 +149,26 @@ function handleImageClick(cardData) {
 previewImagePopup.setEventListeners();
 
 // ************************ Inital Card Setup ************************ //
+
+// Render Card Method
+const renderCard = (card) => {
+  const cardInstance = new Card(card, "#card-template", handleImageClick);
+
+  const cardElement = cardInstance.generateCard();
+  cardSection.addItem(cardElement);
+
+  return cardElement;
+};
+
 const cardSection = new Section(
   {
     items: initialCards,
-    renderer: (cardData) => {
-      console.log("rendering card", cardData);
-
-      const cardInstance = new Card(
-        cardData,
-        "#card-template",
-        handleImageClick
-      );
-
-      const cardElement = cardInstance.generateCard();
-      cardSection.addItem(cardElement);
-
-      return cardElement;
+    renderer: renderCard,
+    handFormSubmit: (item) => {
+      renderCard(item);
     },
   },
-  "#cards-list"
+  "#cards-list" // container selector
 );
 
 cardSection.renderItems();

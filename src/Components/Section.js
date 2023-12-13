@@ -11,13 +11,7 @@ export default class Section {
     // renders all elements on the page
     // iterate through the items array and call the renderer() fucntion on each item
 
-    this._items.forEach((item) => {
-      // creates the card
-      const cardElement = this._renderer(item);
-      // puts the card on the page
-      this._container.appendChild(cardElement);
-      //
-    });
+    this._items.forEach(this._renderer);
   }
 
   addItem(element) {
