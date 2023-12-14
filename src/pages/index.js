@@ -5,6 +5,15 @@ import Section from "../Components/Section.js";
 import PopupWithForm from "../Components/PopupWithForm.js";
 import PopupWithImage from "../Components/PopupWithImage.js";
 import UserInfo from "../Components/UserInfo.js";
+import "./index.css";
+
+import headerSrc from "../images/logo.svg";
+const headerImg = document.getElementById("header-img");
+headerImg.src = headerSrc;
+
+import avatarSrc from "../images/jacques-cousteau.jpg";
+const avatarImg = document.getElementById("avatar-image");
+avatarImg.src = avatarSrc;
 
 // **************************** FormSettings **************************** //
 const formSettings = {
@@ -98,6 +107,30 @@ function handleProfileSaveSubmit(inputValues) {
   });
 }
 
+// ************************** Preview Image ************************** //
+
+// Preview Image Popup
+const previewImagePopup = new PopupWithImage({
+  popupSelector: "#preview-image-modal",
+});
+
+// Clicking an Image to get the preview Image
+function handleImageClick(cardData) {
+  previewImagePopup.open(cardData);
+}
+
+previewImagePopup.setEventListeners();
+
+// Render Card Function
+const renderCard = (card) => {
+  const cardInstance = new Card(card, "#card-template", handleImageClick);
+
+  const cardElement = cardInstance.generateCard();
+  cardSection.addItem(cardElement);
+
+  return cardElement;
+};
+
 // ************************ New Card Creation ************************ //
 
 // Add Card Popup
@@ -118,47 +151,15 @@ addCardButton.addEventListener("click", () => {
 
 function handleCardSaveSubmit(inputValues) {
   // Create a new card instance
-  const newCardInstance = new Card(
-    {
-      name: inputValues.title,
-      link: inputValues.url,
-    },
-    "#card-template",
-    handleImageClick
-  );
+  const newCardInstance = renderCard({
+    name: inputValues.title,
+    link: inputValues.url,
+  });
 
-  // Generate the card element
-  const newCardElement = newCardInstance.generateCard();
-
-  // Add the new card to the Section
-  cardSection.addItem(newCardElement);
+  cardSection.addItem(newCardInstance);
 }
-
-// ************************** Preview Image ************************** //
-
-// Preview Image Popup
-const previewImagePopup = new PopupWithImage({
-  popupSelector: "#preview-image-modal",
-});
-
-// Clicking an Image to get the preview Image
-function handleImageClick(cardData) {
-  previewImagePopup.open(cardData);
-}
-
-previewImagePopup.setEventListeners();
 
 // ************************ Inital Card Setup ************************ //
-
-// Render Card Method
-const renderCard = (card) => {
-  const cardInstance = new Card(card, "#card-template", handleImageClick);
-
-  const cardElement = cardInstance.generateCard();
-  cardSection.addItem(cardElement);
-
-  return cardElement;
-};
 
 const cardSection = new Section(
   {
