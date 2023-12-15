@@ -127,8 +127,6 @@ const renderCard = (card) => {
 
   const cardElement = cardInstance.generateCard();
   cardSection.addItem(cardElement);
-
-  return cardElement;
 };
 
 // ************************ New Card Creation ************************ //
@@ -155,8 +153,6 @@ function handleCardSaveSubmit(inputValues) {
     name: inputValues.title,
     link: inputValues.url,
   });
-
-  cardSection.addItem(newCardInstance);
 }
 
 // ************************ Inital Card Setup ************************ //
