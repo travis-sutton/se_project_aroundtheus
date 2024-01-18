@@ -1,8 +1,10 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardSelector, handleImageClick, handleDeleteClick, api) {
     this._data = data;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteClick = handleDeleteClick;
+    this._api = api;
   }
 
   _getInfo() {
@@ -29,17 +31,48 @@ export default class Card {
     });
 
     this._deleteButton.addEventListener("click", () => {
-      this._deleteCard();
+      this._handleDeleteClick(this);
     });
   }
 
-  _toggleLike() {
-    this._likeButton.classList.toggle("card__like-button-active");
+  _deleteCard() {
+    const cardId = this._data._id;
+
+    this._api
+      .deleteCard(cardId)
+      .then(() => {
+        this._element.remove();
+        this._element = null;
+      })
+      .catch((error) => {
+        console.error(`Error deleteing card: ${error}`);
+      });
   }
 
-  _deleteCard() {
-    this._element.remove();
-    this._element = null;
+  _toggleLike() {
+    const cardId = this._data._id;
+
+    if (this._data.isLiked === false) {
+      this._api
+        .addLike(cardId)
+        .then(() => {
+          this._likeButton.classList.add("card__like-button-active");
+          this._data.isLiked = true;
+        })
+        .catch((error) => {
+          console.error(`Error liking card: ${error}`);
+        });
+    } else {
+      this._api
+        .removeLike(cardId)
+        .then(() => {
+          this._likeButton.classList.remove("card__like-button-active");
+          this._data.isLiked = false;
+        })
+        .catch((error) => {
+          console.error(`Error liking card: ${error}`);
+        });
+    }
   }
 
   generateCard() {
@@ -50,6 +83,12 @@ export default class Card {
 
     this._cardImageElement.src = this._data.link;
     this._cardImageElement.alt = this._data.name;
+
+    if (this._data.isLiked) {
+      this._likeButton.classList.add("card__like-button-active");
+    } else {
+      this._likeButton.classList.remove("card__like-button-active");
+    }
 
     return this._element;
   }

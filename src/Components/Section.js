@@ -18,6 +18,5 @@ export default class Section {
     // takes DOM element and adds it to the container
     // called when adding an individual card to the DOM
     this._container.prepend(element);
-    // console.log("Created from section class:", element);
   }
 }

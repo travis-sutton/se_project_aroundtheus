@@ -4,6 +4,14 @@
   padding-top: 40px;
 }
 
+.profile__image_container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .profile__image {
   height: 120px;
   width: 120px;
@@ -11,6 +19,33 @@
   flex-shrink: 0;
   object-fit: cover;
   background-position: center;
+  transition: opacity 0.3s ease;
+}
+
+.profile__image:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.profile__edit_icon-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 26px;
+  width: 26px;
+
+  background: transparent url(../images/avatarEditIcon.png) center no-repeat;
+  border: none;
+
+  z-index: 1;
+  display: none;
+
+  pointer-events: none;
+}
+
+.profile__image_container:hover .profile__edit_icon-button {
+  display: block;
 }
 
 .profile__info {
