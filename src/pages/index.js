@@ -216,9 +216,9 @@ function handleCardSaveSubmit(inputValues) {
 
   api
     .addNewCard(cardInfo)
-    .then(() => {
+    .then((res) => {
       console.log("New Card:", cardInfo);
-      renderCard(cardInfo);
+      renderCard(res);
     })
     .catch((error) => {
       console.error("API Error:", error);
