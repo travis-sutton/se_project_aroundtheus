@@ -1,9 +1,17 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick, handleDeleteClick, api) {
+  constructor(
+    data,
+    cardSelector,
+    handleImageClick,
+    handleDeleteIconClick,
+    api
+  ) {
     this._data = data;
     this._cardSelector = cardSelector;
+
     this._handleImageClick = handleImageClick;
-    this._handleDeleteClick = handleDeleteClick;
+    this.handleDeleteIconClick = handleDeleteIconClick;
+
     this._api = api;
   }
 
@@ -31,7 +39,7 @@ export default class Card {
     });
 
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteClick(this);
+      this.handleDeleteIconClick(this);
     });
   }
 

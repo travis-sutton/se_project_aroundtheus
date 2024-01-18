@@ -5,6 +5,7 @@ import Section from "../Components/Section.js";
 import Popup from "../Components/Popup.js";
 import PopupWithForm from "../Components/PopupWithForm.js";
 import PopupWithImage from "../Components/PopupWithImage.js";
+import PopupWithSubmit from "../Components/PopupWithSubmit.js";
 import UserInfo from "../Components/UserInfo.js";
 import Api from "../Components/api.js";
 import "./index.css";
@@ -230,20 +231,21 @@ function handleCardSaveSubmit(inputValues) {
 }
 
 // *************************** Delete Card  ************************** //
-const confirmDeletePopup = new Popup({ popupSelector: "#delete-card-modal" });
+const confirmDeletePopup = new PopupWithSubmit({
+  popupSelector: "#delete-card-modal",
+});
+
 const confirmDeleteButton = document.querySelector(
   "#confirm-delete-modal-button"
 );
 
 confirmDeletePopup.setEventListeners();
 
-function handleDeleteClick(cardData) {
-  console.log(cardData);
-  confirmDeletePopup.open(cardData);
-
-  confirmDeleteButton.addEventListener("click", () => {
-    console.log(cardData);
-    cardData._deleteCard();
+function handleDeleteIconClick(card) {
+  confirmDeletePopup.open(card);
+  confirmDeleteButton.focus();
+  confirmDeletePopup.setSubmit(() => {
+    card._deleteCard();
     confirmDeletePopup.close();
   });
 }
@@ -267,7 +269,7 @@ const renderCard = (card) => {
     card,
     "#card-template",
     handleImageClick,
-    handleDeleteClick,
+    handleDeleteIconClick,
     api
   );
 
