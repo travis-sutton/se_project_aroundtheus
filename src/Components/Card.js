@@ -43,7 +43,7 @@ export default class Card {
     });
   }
 
-  _deleteCard() {
+  deleteCard() {
     const cardId = this._data._id;
 
     this._api

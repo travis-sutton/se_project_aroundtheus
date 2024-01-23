@@ -2,12 +2,11 @@
 import Card from "../Components/Card.js";
 import FormValidator from "../Components/FormValidator.js";
 import Section from "../Components/Section.js";
-import Popup from "../Components/Popup.js";
 import PopupWithForm from "../Components/PopupWithForm.js";
 import PopupWithImage from "../Components/PopupWithImage.js";
 import PopupWithSubmit from "../Components/PopupWithSubmit.js";
 import UserInfo from "../Components/UserInfo.js";
-import Api from "../Components/api.js";
+import Api from "../Components/Api.js";
 import "./index.css";
 
 import headerSrc from "../images/logo.svg";
@@ -18,24 +17,16 @@ import avatarSrc from "../images/jacques-cousteau.jpg";
 const avatarImg = document.getElementById("avatar-image");
 avatarImg.src = avatarSrc;
 
-// **************************** Elements **************************** //
-
-const addCardModal = document.querySelector("#add-card-modal");
-const addButtonForm = addCardModal.querySelector(".modal__form");
-
-const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileEditForm = profileEditModal.querySelector(".modal__form");
-
-const editAvatarModal = document.querySelector("#avatar-edit-modal");
-const editAvatarForm = editAvatarModal.querySelector(".modal__form");
-
-// Profile
-const profileTitle = document.querySelector("#prof-title");
-const profileDescription = document.querySelector("#prof-description");
-const profileTitleInput = document.querySelector("#profile-title-input");
-const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
-);
+import {
+  formSettings,
+  addButtonForm,
+  profileEditForm,
+  editAvatarForm,
+  profileTitle,
+  profileDescription,
+  profileTitleInput,
+  profileDescriptionInput,
+} from "../Utils/constants.js";
 
 // ********************************* API ******************************** //
 
@@ -81,9 +72,6 @@ const apiUpdateProfileInfo = (newInfo) => {
   return api
     .editUserInfo(newInfo)
     .then((updatedInfo) => {
-      profileTitleInput.value = updatedInfo.name;
-      profileDescriptionInput.value = updatedInfo.about;
-
       return updatedInfo;
     })
     .catch((error) => {
@@ -119,21 +107,29 @@ profileEditButton.addEventListener("click", () => {
 function handleProfileSaveSubmit(inputValues) {
   const saveButton = document.getElementById("profile-modal-save-button");
 
-  saveButton.textContent = "Saving...";
-
-  userInfoInstance.setUserInfo({
-    name: inputValues.title,
-    job: inputValues.description,
-    avatar: avatarImg.src,
-  });
-
   const newInfo = {
     name: inputValues.title,
     about: inputValues.description,
     avatar: avatarImg.src,
   };
 
-  apiUpdateProfileInfo(newInfo).then(() => (saveButton.textContent = "Save"));
+  saveButton.textContent = "Saving...";
+
+  apiUpdateProfileInfo(newInfo)
+    .then(() => {
+      userInfoInstance.setUserInfo({
+        name: inputValues.title,
+        job: inputValues.description,
+        avatar: avatarImg.src,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    })
+    .finally(() => {
+      saveButton.textContent = "Save";
+    });
 }
 
 // *********************** Profile Avatar Edit *********************** //
@@ -157,13 +153,10 @@ avatarEditButton.addEventListener("click", () => {
 
 function handleAvatarFormSubmit(formData) {
   const saveButton = document.getElementById("avatar-modal-save-button");
+  const avatarLink = formData.url;
+  avatarImg.src = avatarLink;
 
   saveButton.textContent = "Saving...";
-
-  const avatarLink = formData.url;
-
-  const avatarImg = document.getElementById("avatar-image");
-  avatarImg.src = avatarLink;
 
   api
     .updateAvatar(avatarLink)
@@ -220,13 +213,13 @@ function handleCardSaveSubmit(inputValues) {
     .then((res) => {
       console.log("New Card:", cardInfo);
       renderCard(res);
+      addCardPopup.close();
     })
     .catch((error) => {
       console.error("API Error:", error);
     })
     .finally(() => {
       saveButton.textContent = "Save";
-      addCardPopup.close();
     });
 }
 
@@ -245,7 +238,7 @@ function handleDeleteIconClick(card) {
   confirmDeletePopup.open(card);
   confirmDeleteButton.focus();
   confirmDeletePopup.setSubmit(() => {
-    card._deleteCard();
+    card.deleteCard();
     confirmDeletePopup.close();
   });
 }
@@ -277,16 +270,6 @@ const renderCard = (card) => {
   cardSection.addItem(cardElement);
 };
 
-// ************************* Validation ************************* //
-const formSettings = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__save-button",
-  inactiveButtonClass: "modal__save-button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
-
 const profileFormValidator = new FormValidator(formSettings, profileEditForm);
 const addCardFormValidator = new FormValidator(formSettings, addButtonForm);
 const editAvatarFormValidator = new FormValidator(formSettings, editAvatarForm);
@@ -302,11 +285,6 @@ const cardSection = new Section(
   {
     items: [],
     renderer: renderCard,
-    handleFormSubmit: (item) => {
-      renderCard(item);
-    },
   },
   "#cards-list"
 );
-
-cardSection.renderItems();
