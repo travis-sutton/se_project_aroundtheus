@@ -122,7 +122,8 @@ function handleProfileSaveSubmit(inputValues) {
 
   saveButton.textContent = "Saving...";
 
-  apiUpdateProfileInfo(newInfo)
+  api
+    .editUserInfo(newInfo)
     .then((res) => {
       console.log(res);
       userInfoInstance.setUserInfo({
