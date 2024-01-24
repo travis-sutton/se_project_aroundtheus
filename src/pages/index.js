@@ -40,7 +40,6 @@ const api = new Api({
 
 let userInfoInstance;
 
-// Initialiize, Generate User Profile and Cards on Load
 api
   .getUserInfo()
   .then((userInfo) => {
@@ -58,26 +57,35 @@ api
     });
     api.getInitialCards().then((res) => {
       console.log(res);
-      res.forEach((item) => {
-        renderCard(item);
-      });
+      cardSection.renderItems(res);
     });
   })
   .catch((error) => {
     console.log(error);
   });
 
-// Edit User Profile
-const apiUpdateProfileInfo = (newInfo) => {
-  return api
-    .editUserInfo(newInfo)
-    .then((updatedInfo) => {
-      return updatedInfo;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+const renderCard = (card) => {
+  const cardInstance = new Card(
+    card,
+    "#card-template",
+    handleImageClick,
+    handleDeleteIconClick,
+    api
+  );
+
+  return cardInstance.generateCard();
 };
+
+const cardSection = new Section(
+  {
+    items: [],
+    renderer: (card) => {
+      const cardElement = renderCard(card);
+      cardSection.addItem(cardElement);
+    },
+  },
+  "#cards-list"
+);
 
 // ************************** Profile Edit ************************** //
 
@@ -110,22 +118,21 @@ function handleProfileSaveSubmit(inputValues) {
   const newInfo = {
     name: inputValues.title,
     about: inputValues.description,
-    avatar: avatarImg.src,
   };
 
   saveButton.textContent = "Saving...";
 
   apiUpdateProfileInfo(newInfo)
-    .then(() => {
+    .then((res) => {
+      console.log(res);
       userInfoInstance.setUserInfo({
-        name: inputValues.title,
-        job: inputValues.description,
-        avatar: avatarImg.src,
+        name: res.name,
+        job: res.about,
+        avatar: res.avatar,
       });
     })
     .catch((error) => {
       console.error(error);
-      throw error;
     })
     .finally(() => {
       saveButton.textContent = "Save";
@@ -174,7 +181,6 @@ function handleAvatarFormSubmit(formData) {
     })
     .finally(() => {
       saveButton.textContent = "Save";
-      addCardPopup.close();
     });
 }
 
@@ -212,7 +218,8 @@ function handleCardSaveSubmit(inputValues) {
     .addNewCard(cardInfo)
     .then((res) => {
       console.log("New Card:", cardInfo);
-      renderCard(res);
+      const cardElement = renderCard(res);
+      cardSection.addItem(cardElement);
       addCardPopup.close();
     })
     .catch((error) => {
@@ -238,8 +245,16 @@ function handleDeleteIconClick(card) {
   confirmDeletePopup.open(card);
   confirmDeleteButton.focus();
   confirmDeletePopup.setSubmit(() => {
-    card.deleteCard();
-    confirmDeletePopup.close();
+    card
+      .deleteCard()
+      .then(() => {
+        this._element.remove();
+        this._element = null;
+        confirmDeletePopup.close();
+      })
+      .catch((error) => {
+        console.error(`Error deleteing card: ${error}`);
+      });
   });
 }
 
@@ -257,18 +272,7 @@ function handleImageClick(cardData) {
 
 previewImagePopup.setEventListeners();
 
-const renderCard = (card) => {
-  const cardInstance = new Card(
-    card,
-    "#card-template",
-    handleImageClick,
-    handleDeleteIconClick,
-    api
-  );
-
-  const cardElement = cardInstance.generateCard();
-  cardSection.addItem(cardElement);
-};
+// ************************* Form Validation ************************* //
 
 const profileFormValidator = new FormValidator(formSettings, profileEditForm);
 const addCardFormValidator = new FormValidator(formSettings, addButtonForm);
@@ -277,14 +281,3 @@ const editAvatarFormValidator = new FormValidator(formSettings, editAvatarForm);
 profileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 editAvatarFormValidator.enableValidation();
-
-// ************************ Card Renderer ************************ //
-
-// Renders cards on the page
-const cardSection = new Section(
-  {
-    items: [],
-    renderer: renderCard,
-  },
-  "#cards-list"
-);

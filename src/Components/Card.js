@@ -45,16 +45,7 @@ export default class Card {
 
   deleteCard() {
     const cardId = this._data._id;
-
-    this._api
-      .deleteCard(cardId)
-      .then(() => {
-        this._element.remove();
-        this._element = null;
-      })
-      .catch((error) => {
-        console.error(`Error deleteing card: ${error}`);
-      });
+    return this._api.deleteCard(cardId);
   }
 
   _toggleLike() {
