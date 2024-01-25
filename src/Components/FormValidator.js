@@ -20,12 +20,17 @@ export default class FormValidator {
   }
 
   _hideInputError(inputElement) {
-    const errorElement = this._formElement.querySelector(
-      `#${inputElement.id}-error`
-    );
+    const errorElementId = `${inputElement.id}-error`;
+    const errorElement = this._formElement.querySelector(`#${errorElementId}`);
+
+    if (errorElement) {
+      errorElement.textContent = "";
+      errorElement.classList.remove(this._settings.errorClass);
+    } else {
+      console.log(`Error Element with ID ${errorElementId} not found.`);
+    }
+
     inputElement.classList.remove(this._settings.inputErrorClass);
-    errorElement.textContent = "";
-    errorElement.classList.remove(this._settings.errorClass);
   }
 
   _checkInputValidity(inputElement) {

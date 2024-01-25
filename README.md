@@ -6,7 +6,9 @@
 
 # Technologies and Techniques: @Media, @Font-Face, Grid technique, Adaptive Display, Form Submission, Profile Name, Description customization, Javascript
 
-# User is able to: Customzie their profile name and description, and add / remove photos!
+# User is able to: Customzie their profile name, description, and avatar, as well as add / remove photos!
+
+# Site uses an API to remember user information and pictures
 
 **Figma**
 
