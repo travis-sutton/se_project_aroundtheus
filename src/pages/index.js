@@ -131,6 +131,7 @@ function handleProfileSaveSubmit(inputValues) {
         job: res.about,
         avatar: res.avatar,
       });
+      profileEditPopup.close();
     })
     .catch((error) => {
       console.error(error);
@@ -162,7 +163,6 @@ avatarEditButton.addEventListener("click", () => {
 function handleAvatarFormSubmit(formData) {
   const saveButton = document.getElementById("avatar-modal-save-button");
   const avatarLink = formData.url;
-  avatarImg.src = avatarLink;
 
   saveButton.textContent = "Saving...";
 
@@ -249,8 +249,8 @@ function handleDeleteIconClick(card) {
     card
       .deleteCard()
       .then(() => {
-        this._element.remove();
-        this._element = null;
+        // this._element.remove();
+        // this._element = null;
         confirmDeletePopup.close();
       })
       .catch((error) => {

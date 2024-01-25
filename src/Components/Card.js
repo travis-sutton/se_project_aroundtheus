@@ -45,6 +45,8 @@ export default class Card {
 
   deleteCard() {
     const cardId = this._data._id;
+    this._element.remove();
+    this._element = null;
     return this._api.deleteCard(cardId);
   }
 
