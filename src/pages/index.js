@@ -249,8 +249,6 @@ function handleDeleteIconClick(card) {
     card
       .deleteCard()
       .then(() => {
-        // this._element.remove();
-        // this._element = null;
         confirmDeletePopup.close();
       })
       .catch((error) => {
